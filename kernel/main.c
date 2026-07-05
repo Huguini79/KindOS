@@ -2,6 +2,7 @@
 #include "console.h"
 #include "printk.h"
 #include "gdt.h"
+#include "pcb.h"
 #include "traps.h"
 #include "ioport.h"
 
@@ -30,6 +31,11 @@ void remapPIC()
 	outb(0xA1, icw4_80x86_mode_all);
 }
 
+void proc1()
+{
+	printk("Process 1 in execution");
+}
+
 void kernel_main()
 {
 	remapPIC();
@@ -38,6 +44,9 @@ void kernel_main()
 	ConsoleInstall();
 	printk("Hello World!\n");
 	printk("In KindOS, we are very kind with everyone :)\n\n# ");
+
+	struct pcb* firstProcess = createProcess(0, proc1);
+	int n = exec(firstProcess);
 
 	while (1)
 	{

@@ -9,7 +9,7 @@ U16* video_mem;
 U32 x;
 U32 y;
 
-void enable_cursor(uint8_t cursor_start, uint8_t cursor_end)
+void enable_cursor(U8 cursor_start, U8 cursor_end)
 {
     outb(0x3D4, 0x0A);
     outb(0x3D5, (insb(0x3D5) & 0xC0) | cursor_start);
@@ -18,13 +18,13 @@ void enable_cursor(uint8_t cursor_start, uint8_t cursor_end)
     outb(0x3D5, (insb(0x3D5) & 0xE0) | cursor_end);
 }
 
-void update_cursor(int x, int y)
+void update_cursor(U32 x, U32 y)
 {
-    uint16_t pos = (y * VGA_WIDTH) + x;
+    U16 pos = (y * VGA_WIDTH) + x;
     outb(0x3D4, 0x0F);
-    outb(0x3D5, (uint8_t) (pos & 0xFF));
+    outb(0x3D5, (U8) (pos & 0xFF));
     outb(0x3D4, 0x0E);
-    outb(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
+    outb(0x3D5, (U8) ((pos >> 8) & 0xFF));
 }
 
 void ConsoleInstall()

@@ -1,12 +1,9 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#include <stdint.h>
-#include <stddef.h>
-
-typedef uint64_t U64;
-typedef uint32_t U32;
-typedef uint16_t U16;
-typedef uint8_t U8;
+typedef unsigned long U64;
+typedef unsigned int U32;
+typedef unsigned short U16;
+typedef unsigned char U8;
 
 #endif
