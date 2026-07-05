@@ -27,20 +27,18 @@ struct Gdt gdt_table[8192] __attribute__((aligned(8))); /* GDT Table Aligned 8 b
 void setGdtDescriptor(
 	U32 n,
 	U16 limit,
-	U16 base_low,
-	U8 base_mid,
+	U32 base,
 	U8 access_byte,
-	U8 flags,
-	U8 base_high
+	U8 flags
 )
 {
 	struct Gdt* Gdt = &gdt_table[n]; /* A pointer to that entry in Gdt Table */
 	Gdt->limit = limit;
-	Gdt->base_low = base_low;
-	Gdt->base_mid = base_mid;
+	Gdt->base_low = base & 0xFFFF;
+	Gdt->base_mid = base >> 16 & 0xFF;
 	Gdt->access_byte = access_byte;
 	Gdt->flags = flags;
-	Gdt->base_high = base_high;
+	Gdt->base_high = base >> 24 & 0xFF;
 }
 
 void GdtInstall()
@@ -52,9 +50,9 @@ void GdtInstall()
 		* Then the data segment descriptor
 		* And finally the tss segment descriptor
 	*/
-	setGdtDescriptor(0, 0, 0, 0, 0, 0, 0); /* NULL */
-	setGdtDescriptor(1, 0xFFFF, 0, 0, 0x9B, 0xCF, 0); /* CODE */
-	setGdtDescriptor(2, 0xFFFF, 0, 0, 0x93, 0xCF, 0); /* DATA */
+	setGdtDescriptor(0, 0, 0, 0, 0); /* NULL */
+	setGdtDescriptor(1, 0xFFFF, 0, 0x9B, 0xCF); /* CODE */
+	setGdtDescriptor(2, 0xFFFF, 0, 0x93, 0xCF); /* DATA */
 
 	/*
 		* Set up the Gdt Register
