@@ -60,6 +60,7 @@ struct pcb
 	U32 signal;
 	enum State state;
 	struct tss tss;
+	char* name;
 	
 } __attribute__((packed));
 
@@ -68,5 +69,6 @@ extern struct pcb processes[MAX_PROCESSES];
 struct pcb* createProcess(pid_t pid, U32 eip);
 void yield();
 int exec(struct pcb* pcb);
+void ps();
 
 #endif

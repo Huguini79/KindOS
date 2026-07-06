@@ -2,6 +2,7 @@
 #include "printk.h"
 #include "ioport.h"
 #include "keyboard.h"
+#include "pcb.h"
 
 struct Idt
 {
@@ -48,7 +49,11 @@ volatile U32 ticks = 0;
 void zero_exception_handler() {printk("Divide by zero error\n");}
 void double_fault_handler() {panic("** KERNEL PANIC: Double Fault #DF **");}
 void invalid_tss() {panic("** KERNEL PANIC: Invalid TSS **");}
-void clock_handler() {ticks += 1; outb(0x20, 0x20);}
+void clock_handler() {
+	outb(0x20, 0x20);
+	ticks += 1;
+	yield();
+}
 void keyboard_handler_ext() {
 	keyboard_handler();
 	outb(0x20, 0x20);

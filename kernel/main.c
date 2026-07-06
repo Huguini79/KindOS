@@ -34,20 +34,52 @@ void remapPIC()
 struct pcb* process1;
 struct pcb* process2;
 
+void proc3()
+{
+	int a = 0;
+	printk("\nPROC3\n");
+	while (1) {
+		a++;
+		if (a == 1000000000)
+		{
+			printk("PROC3 FINISHED\n");
+			break;
+		}
+		__asm__ volatile ("sti");
+	}
+	while (1) {__asm__ volatile ("sti");}
+}
+
 void proc2()
 {
-	printk("Process 2: Hello World!\n");
-	yield();
-	printk("Process 2: I'm back!\n");
-	yield();
+	int a = 0;
+	printk("\nPROC2\n");
+	while (1) {
+		a++;
+		if (a == 1000000000)
+		{
+			printk("PROC2 FINISHED\n");
+			break;
+		}
+		__asm__ volatile ("sti");
+	}
+	while (1) {__asm__ volatile ("sti");}
 }
 
 void proc1()
 {
-	printk("Process 1: Hello World!\n");
-	yield();
-	printk("Process 1: I'm back!\n");
-	yield();
+	int a = 0;
+	printk("\nPROC1\n");
+	while (1) {
+		a++;
+		if (a == 1000000000)
+		{
+			printk("PROC1 FINISHED\n");
+			break;
+		}
+		__asm__ volatile ("sti");
+	}
+	while (1) {__asm__ volatile ("sti");}
 }
 
 void kernel_main()
@@ -59,11 +91,12 @@ void kernel_main()
 	printk("Hello World!\n");
 	printk("In KindOS, we are very kind with everyone :)\n\n# ");
 
-	process1 = createProcess(0, proc1);
-	process2 = createProcess(1, proc2);
+	process1 = createProcess(1, proc1);
+	process2 = createProcess(2, proc2);
+	struct pcb* process3 = createProcess(3, proc3);
 //	int n = exec(process1);
 
-	yield();
+	// yield();
 
 	while (1)
 	{

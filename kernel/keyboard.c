@@ -63,7 +63,12 @@ void keyboard_handler()
         {
             clear();
 
-        } else if (strcmp(keyboard_buffer, "") == 0)
+        } else if (strcmp(keyboard_buffer, "ps") == 0)
+        {
+        	ps();
+        }
+
+        else if (strcmp(keyboard_buffer, "") == 0)
         {
             printk("\n");
 

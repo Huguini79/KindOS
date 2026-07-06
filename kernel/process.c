@@ -2,6 +2,7 @@
 #include "gdt.h"
 #include "pcb.h"
 #include "printk.h"
+#include "string.h"
 
 struct pcb* current = &processes[0];
 struct pcb* next = &processes[0];
@@ -15,6 +16,7 @@ void blank()
 struct pcb* createProcess(pid_t pid, U32 eip)
 {
 		struct pcb* newProcess = &processes[pid];
+		newProcess->name = "new process";
 		newProcess->pid = pid;
 		newProcess->alarm = 0;
 		newProcess->signal = 0;
@@ -52,19 +54,19 @@ struct pcb* createProcess(pid_t pid, U32 eip)
 
 void yield()
 {
-	current->state = Ready;
-	current = next;
-	current->state = Running;
-
 	if (processes[current->pid+1].tss.eip != 0)
 	{
 		next = &processes[current->pid+1];
 
 	} else
 	{
-		next = &processes[0];
+		next = &processes[1];
 	}
 
+	current->state = Ready;
+	current = next;
+	current->state = Running;
+	
 	exec(current);
 }
 
@@ -90,5 +92,31 @@ int exec(struct pcb* pcb)
 	} else
 	{
 		return -1;
+	}
+}
+
+void ps()
+{
+	char buf[16];
+	printk("\nPID          CMD          STATE\n");
+	for (int i = 0; i < 64; ++i)
+	{
+		if (processes[i].state == Running || processes[i].state == Ready || processes[i].tss.eip != 0)
+		{
+			itoa(processes[i].pid, buf, 10);
+			printk(buf);
+			printk("          ");
+			printk(processes[i].name);
+			printk("          ");
+			if (processes[i].state == Running)
+			{
+				printk("Running");
+				
+			} else
+			{
+				printk("Ready");
+			}
+			printk("\n");
+		}
 	}
 }
