@@ -66,6 +66,7 @@ struct pcb
 extern struct pcb processes[MAX_PROCESSES];
 
 struct pcb* createProcess(pid_t pid, U32 eip);
+void yield();
 int exec(struct pcb* pcb);
 
 #endif

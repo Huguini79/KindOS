@@ -31,9 +31,23 @@ void remapPIC()
 	outb(0xA1, icw4_80x86_mode_all);
 }
 
+struct pcb* process1;
+struct pcb* process2;
+
+void proc2()
+{
+	printk("Process 2: Hello World!\n");
+	yield();
+	printk("Process 2: I'm back!\n");
+	yield();
+}
+
 void proc1()
 {
-	printk("Process 1 in execution");
+	printk("Process 1: Hello World!\n");
+	yield();
+	printk("Process 1: I'm back!\n");
+	yield();
 }
 
 void kernel_main()
@@ -45,8 +59,11 @@ void kernel_main()
 	printk("Hello World!\n");
 	printk("In KindOS, we are very kind with everyone :)\n\n# ");
 
-	struct pcb* firstProcess = createProcess(0, proc1);
-	int n = exec(firstProcess);
+	process1 = createProcess(0, proc1);
+	process2 = createProcess(1, proc2);
+//	int n = exec(process1);
+
+	yield();
 
 	while (1)
 	{

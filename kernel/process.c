@@ -1,7 +1,10 @@
 #include "types.h"
 #include "gdt.h"
 #include "pcb.h"
+#include "printk.h"
 
+struct pcb* current = &processes[0];
+struct pcb* next = &processes[0];
 struct pcb processes[64] = {0};
 
 void blank()
@@ -45,6 +48,24 @@ struct pcb* createProcess(pid_t pid, U32 eip)
 		setTSSDescriptor(newProcess);
 
 		return newProcess;
+}
+
+void yield()
+{
+	current->state = Ready;
+	current = next;
+	current->state = Running;
+
+	if (processes[current->pid+1].tss.eip != 0)
+	{
+		next = &processes[current->pid+1];
+
+	} else
+	{
+		next = &processes[0];
+	}
+
+	exec(current);
 }
 
 int exec(struct pcb* pcb)
