@@ -4,6 +4,7 @@
 #include "gdt.h"
 #include "pcb.h"
 #include "traps.h"
+#include "alarm.h"
 #include "ioport.h"
 
 void remapPIC()
@@ -36,49 +37,22 @@ struct pcb* process2;
 
 void proc3()
 {
-	int a = 0;
+	alarm(5);
 	printk("\nPROC3\n");
-	while (1) {
-		a++;
-		if (a == 1000000000)
-		{
-			printk("PROC3 FINISHED\n");
-			break;
-		}
-		__asm__ volatile ("sti");
-	}
 	while (1) {__asm__ volatile ("sti");}
 }
 
 void proc2()
 {
-	int a = 0;
+	alarm(3);
 	printk("\nPROC2\n");
-	while (1) {
-		a++;
-		if (a == 1000000000)
-		{
-			printk("PROC2 FINISHED\n");
-			break;
-		}
-		__asm__ volatile ("sti");
-	}
 	while (1) {__asm__ volatile ("sti");}
 }
 
 void proc1()
 {
-	int a = 0;
+	alarm(6);
 	printk("\nPROC1\n");
-	while (1) {
-		a++;
-		if (a == 1000000000)
-		{
-			printk("PROC1 FINISHED\n");
-			break;
-		}
-		__asm__ volatile ("sti");
-	}
 	while (1) {__asm__ volatile ("sti");}
 }
 

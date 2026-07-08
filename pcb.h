@@ -4,6 +4,9 @@
 // #include "gdt.h"
 #include "types.h"
 
+#include <stdint.h>
+#include <stddef.h>
+
 #define MAX_PROCESSES 64
 
 typedef U32 pid_t;
@@ -56,6 +59,7 @@ struct tss
 struct pcb
 {
 	pid_t pid;
+	U32 counter;
 	U32 alarm;
 	U32 signal;
 	enum State state;
@@ -65,6 +69,8 @@ struct pcb
 } __attribute__((packed));
 
 extern struct pcb processes[MAX_PROCESSES];
+extern struct pcb* current;
+extern struct pcb* next;
 
 struct pcb* createProcess(pid_t pid, U32 eip);
 void yield();

@@ -8,9 +8,40 @@ struct pcb* current = &processes[0];
 struct pcb* next = &processes[0];
 struct pcb processes[64] = {0};
 
+void deleteProcess(struct pcb* pcb)
+{
+	pcb->alarm = 0;
+	pcb->signal = 0;
+	pcb->tss.eax = 0;
+	pcb->tss.ecx = 0;
+	pcb->tss.edx = 0;
+	pcb->tss.ebx = 0;
+	pcb->tss.edi = 0;
+	pcb->tss.esi = 0;
+	pcb->tss.esp = 0;
+	pcb->tss.eflags = 0;
+	pcb->tss.eip = 0;
+	pcb->tss.ebp = 0;
+	pcb->tss.iopb = 0;
+}
+
 void blank()
 {
-	
+
+}
+
+int searchProcesses()
+{
+	int c = 0;
+	for (int i = 1; i < 64; ++i)
+	{
+		if (processes[i].tss.eip != 0)
+		{
+			c++;
+		}
+	}
+
+	return c;
 }
 
 struct pcb* createProcess(pid_t pid, U32 eip)
@@ -33,6 +64,7 @@ struct pcb* createProcess(pid_t pid, U32 eip)
 
 		U32* stack = (U32*)0x3FF00 + pid * 8192;
 
+		stack--;
 		*stack = blank;
 		
 		newProcess->tss.esp = (U32)stack;
@@ -54,20 +86,40 @@ struct pcb* createProcess(pid_t pid, U32 eip)
 
 void yield()
 {
-	if (processes[current->pid+1].tss.eip != 0)
+	if (searchProcesses() > 1)
 	{
-		next = &processes[current->pid+1];
+		if (processes[current->pid+1].tss.eip != 0)
+		{
+			next = &processes[current->pid+1];
 
-	} else
-	{
-		next = &processes[1];
+		} else
+		{
+			next = &processes[1];
+		}
+
+		current->state = Ready;
+		current = next;
+		current->state = Running;
+
+		put_cxy('C', 60, 0);
+		put_cxy('U', 61, 0);
+		put_cxy('R', 62, 0);
+		put_cxy('R', 63, 0);
+		put_cxy('E', 64, 0);
+		put_cxy('N', 65, 0);
+		put_cxy('T', 66, 0);
+		put_cxy(':', 67, 0);
+		put_cxy(' ', 68, 0);
+		put_cxy('P', 69, 0);
+		put_cxy('I', 70, 0);
+		put_cxy('D', 71, 0);
+		put_cxy('=', 72, 0);
+		char pid_buf[16];
+		itoa(current->pid, pid_buf, 10);
+		put_cxy(pid_buf[0], 73, 0);
+		
+		exec(current);
 	}
-
-	current->state = Ready;
-	current = next;
-	current->state = Running;
-	
-	exec(current);
 }
 
 int exec(struct pcb* pcb)
@@ -101,7 +153,7 @@ void ps()
 	printk("\nPID          CMD          STATE\n");
 	for (int i = 0; i < 64; ++i)
 	{
-		if (processes[i].state == Running || processes[i].state == Ready || processes[i].tss.eip != 0)
+		if (processes[i].state == Running || processes[i].state == Ready || processes[i].tss.eip != 0 && processes[i].state != Zombie)
 		{
 			itoa(processes[i].pid, buf, 10);
 			printk(buf);
