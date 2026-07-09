@@ -53,7 +53,7 @@ Linker script and memory map
 
                 0x00100000                        . = 0x100000
 
-.text           0x00100000     0x16eb
+.text           0x00100000     0x16fb
  *(.text)
  .text          0x00100000       0x13 build/entry.asm.o
                 0x0010000c                start
@@ -65,184 +65,184 @@ Linker script and memory map
                 0x0010003c                outb
                 0x00100048                outw
                 0x00100055                outl
- .text          0x00100061       0x77 build/alarm.o
+ .text          0x00100061       0x7c build/alarm.o
                 0x00100061                searchForFree
                 0x00100086                alarm
- .text          0x001000d8       0xb9 build/signal.o
-                0x001000d8                sendsig
-                0x001000eb                psig
- .text          0x00100191      0x3d5 build/process.o
-                0x00100191                blank
-                0x00100192                deleteProcess
-                0x001001c0                searchProcesses
-                0x001001ec                createProcess
-                0x001002b2                markAsZombie
-                0x001002ed                exec
-                0x0010031b                yield
-                0x0010047f                ps
- .text          0x00100566      0x135 build/gdt.o
-                0x00100566                setGdtDescriptor
-                0x001005ae                setTSSDescriptor
-                0x001005ce                GdtInstall
- .text          0x0010069b      0x23b build/console.o
-                0x0010069b                enable_cursor
-                0x0010071e                update_cursor
-                0x0010077c                scroll
-                0x001007a3                put_cxy
-                0x001007cb                clear
-                0x00100816                ConsoleInstall
-                0x0010083b                put_c
- .text          0x001008d6      0x409 build/traps.o
-                0x001008d6                syscall_handler
-                0x001008f6                clock_handler
-                0x001009a1                keyboard_handler_ext
-                0x001009c5                setIdtDescriptor
-                0x001009ff                panic
-                0x00100be9                zero_exception_handler
-                0x00100c04                double_fault_handler
-                0x00100c1f                invalid_tss
-                0x00100c3a                TrapsInstall
- .text          0x00100cdf      0x19a build/main.o
-                0x00100cdf                proc3
-                0x00100d09                proc2
-                0x00100d36                proc1
-                0x00100d60                remapPIC
-                0x00100dd6                kernel_main
- .text          0x00100e79      0x773 build/keyboard.o
-                0x00100e79                addCharacter
-                0x00100efc                keyboard_handler
- .text          0x001015ec       0xc7 build/string.o
-                0x001015ec                strlen
-                0x001015fc                strcmp
-                0x0010161d                memset
-                0x0010163c                itoa
- .text          0x001016b3       0x38 build/printk.o
-                0x001016b3                printk
+ .text          0x001000dd      0x103 build/signal.o
+                0x001000dd                sendsig
+                0x001000f0                psig
+ .text          0x001001e0      0x3d5 build/process.o
+                0x001001e0                blank
+                0x001001e1                deleteProcess
+                0x0010020f                searchProcesses
+                0x0010023b                createProcess
+                0x00100301                markAsZombie
+                0x0010033c                exec
+                0x0010036a                yield
+                0x001004ce                ps
+ .text          0x001005b5      0x135 build/gdt.o
+                0x001005b5                setGdtDescriptor
+                0x001005fd                setTSSDescriptor
+                0x0010061d                GdtInstall
+ .text          0x001006ea      0x23b build/console.o
+                0x001006ea                enable_cursor
+                0x0010076d                update_cursor
+                0x001007cb                scroll
+                0x001007f2                put_cxy
+                0x0010081a                clear
+                0x00100865                ConsoleInstall
+                0x0010088a                put_c
+ .text          0x00100925      0x3ca build/traps.o
+                0x00100925                syscall_handler
+                0x00100945                clock_handler
+                0x001009b1                keyboard_handler_ext
+                0x001009d5                setIdtDescriptor
+                0x00100a0f                panic
+                0x00100bf9                zero_exception_handler
+                0x00100c14                double_fault_handler
+                0x00100c2f                invalid_tss
+                0x00100c4a                TrapsInstall
+ .text          0x00100cef      0x19a build/main.o
+                0x00100cef                proc3
+                0x00100d19                proc2
+                0x00100d46                proc1
+                0x00100d70                remapPIC
+                0x00100de6                kernel_main
+ .text          0x00100e89      0x773 build/keyboard.o
+                0x00100e89                addCharacter
+                0x00100f0c                keyboard_handler
+ .text          0x001015fc       0xc7 build/string.o
+                0x001015fc                strlen
+                0x0010160c                strcmp
+                0x0010162d                memset
+                0x0010164c                itoa
+ .text          0x001016c3       0x38 build/printk.o
+                0x001016c3                printk
 
-.iplt           0x001016eb        0x0
- .iplt          0x001016eb        0x0 build/entry.asm.o
+.iplt           0x001016fb        0x0
+ .iplt          0x001016fb        0x0 build/entry.asm.o
 
 .text.__x86.get_pc_thunk.ax
-                0x001016eb        0x4
+                0x001016fb        0x4
  .text.__x86.get_pc_thunk.ax
-                0x001016eb        0x4 build/alarm.o
-                0x001016eb                __x86.get_pc_thunk.ax
+                0x001016fb        0x4 build/alarm.o
+                0x001016fb                __x86.get_pc_thunk.ax
 
 .text.__x86.get_pc_thunk.bx
-                0x001016ef        0x4
+                0x001016ff        0x4
  .text.__x86.get_pc_thunk.bx
-                0x001016ef        0x4 build/alarm.o
-                0x001016ef                __x86.get_pc_thunk.bx
+                0x001016ff        0x4 build/alarm.o
+                0x001016ff                __x86.get_pc_thunk.bx
 
 .text.__x86.get_pc_thunk.dx
-                0x001016f3        0x4
+                0x00101703        0x4
  .text.__x86.get_pc_thunk.dx
-                0x001016f3        0x4 build/console.o
-                0x001016f3                __x86.get_pc_thunk.dx
+                0x00101703        0x4 build/console.o
+                0x00101703                __x86.get_pc_thunk.dx
 
-.eh_frame       0x001016f8      0xc54
- .eh_frame      0x001016f8       0x80 build/alarm.o
- .eh_frame      0x00101778       0x70 build/signal.o
-                                 0x9c (size before relaxing)
- .eh_frame      0x001017e8      0x20c build/process.o
-                                0x24c (size before relaxing)
- .eh_frame      0x001019f4       0x74 build/gdt.o
+.eh_frame       0x00101708      0xc5c
+ .eh_frame      0x00101708       0x80 build/alarm.o
+ .eh_frame      0x00101788       0x88 build/signal.o
                                  0xb4 (size before relaxing)
- .eh_frame      0x00101a68      0x19c build/console.o
+ .eh_frame      0x00101810      0x20c build/process.o
+                                0x24c (size before relaxing)
+ .eh_frame      0x00101a1c       0x74 build/gdt.o
+                                 0xb4 (size before relaxing)
+ .eh_frame      0x00101a90      0x19c build/console.o
                                 0x1dc (size before relaxing)
- .eh_frame      0x00101c04      0x244 build/traps.o
-                                0x284 (size before relaxing)
- .eh_frame      0x00101e48      0x124 build/main.o
+ .eh_frame      0x00101c2c      0x234 build/traps.o
+                                0x274 (size before relaxing)
+ .eh_frame      0x00101e60      0x124 build/main.o
                                 0x150 (size before relaxing)
- .eh_frame      0x00101f6c      0x324 build/keyboard.o
+ .eh_frame      0x00101f84      0x324 build/keyboard.o
                                 0x350 (size before relaxing)
- .eh_frame      0x00102290       0x7c build/string.o
+ .eh_frame      0x001022a8       0x7c build/string.o
                                  0xa8 (size before relaxing)
- .eh_frame      0x0010230c       0x40 build/printk.o
+ .eh_frame      0x00102324       0x40 build/printk.o
                                  0x6c (size before relaxing)
 
-.rodata.str1.1  0x0010234c      0x27a
+.rodata.str1.1  0x00102364      0x27f
  .rodata.str1.1
-                0x0010234c      0x27a build/signal.o
-                                 0x53 (size before relaxing)
+                0x00102364      0x27f build/signal.o
+                                 0x78 (size before relaxing)
  .rodata.str1.1
-                0x001025c6       0x50 build/process.o
+                0x001025e3       0x50 build/process.o
  .rodata.str1.1
-                0x001025c6       0xd2 build/traps.o
+                0x001025e3       0xb2 build/traps.o
  .rodata.str1.1
-                0x001025c6       0x57 build/main.o
+                0x001025e3       0x57 build/main.o
  .rodata.str1.1
-                0x001025c6       0x8f build/keyboard.o
+                0x001025e3       0x8f build/keyboard.o
  .rodata.str1.1
-                0x001025c6       0x48 build/string.o
+                0x001025e3       0x48 build/string.o
 
-.rel.dyn        0x001025c8        0x0
- .rel.got       0x001025c8        0x0 build/entry.asm.o
- .rel.iplt      0x001025c8        0x0 build/entry.asm.o
+.rel.dyn        0x001025e4        0x0
+ .rel.got       0x001025e4        0x0 build/entry.asm.o
+ .rel.iplt      0x001025e4        0x0 build/entry.asm.o
 
-.data           0x001025c6        0x0
+.data           0x001025e3        0x0
  *(.data)
- .data          0x001025c6        0x0 build/alarm.o
- .data          0x001025c6        0x0 build/signal.o
- .data          0x001025c6        0x0 build/process.o
- .data          0x001025c6        0x0 build/gdt.o
- .data          0x001025c6        0x0 build/console.o
- .data          0x001025c6        0x0 build/traps.o
- .data          0x001025c6        0x0 build/main.o
- .data          0x001025c6        0x0 build/keyboard.o
- .data          0x001025c6        0x0 build/string.o
- .data          0x001025c6        0x0 build/printk.o
+ .data          0x001025e3        0x0 build/alarm.o
+ .data          0x001025e3        0x0 build/signal.o
+ .data          0x001025e3        0x0 build/process.o
+ .data          0x001025e3        0x0 build/gdt.o
+ .data          0x001025e3        0x0 build/console.o
+ .data          0x001025e3        0x0 build/traps.o
+ .data          0x001025e3        0x0 build/main.o
+ .data          0x001025e3        0x0 build/keyboard.o
+ .data          0x001025e3        0x0 build/string.o
+ .data          0x001025e3        0x0 build/printk.o
 
-.got            0x001025c8        0x0
- .got           0x001025c8        0x0 build/entry.asm.o
+.got            0x001025e4        0x0
+ .got           0x001025e4        0x0 build/entry.asm.o
 
-.got.plt        0x001025c8        0xc
- .got.plt       0x001025c8        0xc build/entry.asm.o
-                0x001025c8                _GLOBAL_OFFSET_TABLE_
+.got.plt        0x001025e4        0xc
+ .got.plt       0x001025e4        0xc build/entry.asm.o
+                0x001025e4                _GLOBAL_OFFSET_TABLE_
 
-.igot.plt       0x001025d4        0x0
- .igot.plt      0x001025d4        0x0 build/entry.asm.o
+.igot.plt       0x001025f0        0x0
+ .igot.plt      0x001025f0        0x0 build/entry.asm.o
 
 .data.rel.local
-                0x001025d4        0x8
+                0x001025f0        0x8
  .data.rel.local
-                0x001025d4        0x8 build/process.o
-                0x001025d4                next
-                0x001025d8                current
+                0x001025f0        0x8 build/process.o
+                0x001025f0                next
+                0x001025f4                current
 
-.bss            0x001025e0    0x37378
+.bss            0x00102600    0x37478
  *(.bss)
- .bss           0x001025e0    0x10000 build/entry.asm.o
- .bss           0x001125e0      0x300 build/alarm.o
-                0x001125e0                callouts
- .bss           0x001128e0        0x0 build/signal.o
- .bss           0x001128e0     0x4000 build/process.o
-                0x001128e0                zombie_processes
-                0x001148e0                processes
- .bss           0x001168e0    0x10006 build/gdt.o
-                0x001168e0                gdt_table
-                0x001268e0                gdtr
- *fill*         0x001268e6        0x2 
- .bss           0x001268e8        0xc build/console.o
-                0x001268e8                y
-                0x001268ec                x
-                0x001268f0                video_mem
- *fill*         0x001268f4        0x4 
- .bss           0x001268f8    0x1000e build/traps.o
-                0x001268f8                ticks
-                0x00126900                idt_table
-                0x00136900                idtr
- *fill*         0x00136906        0x2 
- .bss           0x00136908        0x8 build/main.o
-                0x00136908                process2
-                0x0013690c                process1
- *fill*         0x00136910       0x10 
- .bss           0x00136920     0x3038 build/keyboard.o
-                0x00136920                ctrl_pressed
-                0x00136924                pos
-                0x00136940                keyboard_buffer
- .bss           0x00139958        0x0 build/string.o
- .bss           0x00139958        0x0 build/printk.o
+ .bss           0x00102600    0x10000 build/entry.asm.o
+ .bss           0x00112600      0x400 build/alarm.o
+                0x00112600                callouts
+ .bss           0x00112a00        0x0 build/signal.o
+ .bss           0x00112a00     0x4000 build/process.o
+                0x00112a00                zombie_processes
+                0x00114a00                processes
+ .bss           0x00116a00    0x10006 build/gdt.o
+                0x00116a00                gdt_table
+                0x00126a00                gdtr
+ *fill*         0x00126a06        0x2 
+ .bss           0x00126a08        0xc build/console.o
+                0x00126a08                y
+                0x00126a0c                x
+                0x00126a10                video_mem
+ *fill*         0x00126a14        0x4 
+ .bss           0x00126a18    0x1000e build/traps.o
+                0x00126a18                ticks
+                0x00126a20                idt_table
+                0x00136a20                idtr
+ *fill*         0x00136a26        0x2 
+ .bss           0x00136a28        0x8 build/main.o
+                0x00136a28                process2
+                0x00136a2c                process1
+ *fill*         0x00136a30       0x10 
+ .bss           0x00136a40     0x3038 build/keyboard.o
+                0x00136a40                ctrl_pressed
+                0x00136a44                pos
+                0x00136a60                keyboard_buffer
+ .bss           0x00139a78        0x0 build/string.o
+ .bss           0x00139a78        0x0 build/printk.o
 LOAD build/entry.asm.o
 LOAD build/ioport.asm.o
 LOAD build/alarm.o
@@ -257,32 +257,32 @@ LOAD build/string.o
 LOAD build/printk.o
 OUTPUT(iso/boot/kernel elf32-i386)
 
-.debug_info     0x00000000     0x32cf
- .debug_info    0x00000000      0x39e build/alarm.o
- .debug_info    0x0000039e      0x365 build/signal.o
- .debug_info    0x00000703      0x68a build/process.o
- .debug_info    0x00000d8d      0x666 build/gdt.o
- .debug_info    0x000013f3      0x335 build/console.o
- .debug_info    0x00001728      0x7b0 build/traps.o
- .debug_info    0x00001ed8      0x549 build/main.o
- .debug_info    0x00002421      0xb53 build/keyboard.o
- .debug_info    0x00002f74      0x234 build/string.o
- .debug_info    0x000031a8      0x127 build/printk.o
+.debug_info     0x00000000     0x32f9
+ .debug_info    0x00000000      0x3ab build/alarm.o
+ .debug_info    0x000003ab      0x39b build/signal.o
+ .debug_info    0x00000746      0x68a build/process.o
+ .debug_info    0x00000dd0      0x666 build/gdt.o
+ .debug_info    0x00001436      0x335 build/console.o
+ .debug_info    0x0000176b      0x78a build/traps.o
+ .debug_info    0x00001ef5      0x556 build/main.o
+ .debug_info    0x0000244b      0xb53 build/keyboard.o
+ .debug_info    0x00002f9e      0x234 build/string.o
+ .debug_info    0x000031d2      0x127 build/printk.o
 
-.debug_abbrev   0x00000000     0x10c1
+.debug_abbrev   0x00000000     0x10bb
  .debug_abbrev  0x00000000      0x18d build/alarm.o
  .debug_abbrev  0x0000018d      0x169 build/signal.o
  .debug_abbrev  0x000002f6      0x2a4 build/process.o
  .debug_abbrev  0x0000059a      0x206 build/gdt.o
  .debug_abbrev  0x000007a0      0x18b build/console.o
- .debug_abbrev  0x0000092b      0x20f build/traps.o
- .debug_abbrev  0x00000b3a      0x1c8 build/main.o
- .debug_abbrev  0x00000d02      0x1fa build/keyboard.o
- .debug_abbrev  0x00000efc       0xf6 build/string.o
- .debug_abbrev  0x00000ff2       0xcf build/printk.o
+ .debug_abbrev  0x0000092b      0x209 build/traps.o
+ .debug_abbrev  0x00000b34      0x1c8 build/main.o
+ .debug_abbrev  0x00000cfc      0x1fa build/keyboard.o
+ .debug_abbrev  0x00000ef6       0xf6 build/string.o
+ .debug_abbrev  0x00000fec       0xcf build/printk.o
 
 .debug_loclists
-                0x00000000      0x6cf
+                0x00000000      0x6ab
  .debug_loclists
                 0x00000000       0x51 build/alarm.o
  .debug_loclists
@@ -292,15 +292,15 @@ OUTPUT(iso/boot/kernel elf32-i386)
  .debug_loclists
                 0x0000023b       0xa4 build/console.o
  .debug_loclists
-                0x000002df       0x4e build/traps.o
+                0x000002df       0x2a build/traps.o
  .debug_loclists
-                0x0000032d       0x17 build/main.o
+                0x00000309       0x17 build/main.o
  .debug_loclists
-                0x00000344      0x17e build/keyboard.o
+                0x00000320      0x17e build/keyboard.o
  .debug_loclists
-                0x000004c2      0x1c8 build/string.o
+                0x0000049e      0x1c8 build/string.o
  .debug_loclists
-                0x0000068a       0x45 build/printk.o
+                0x00000666       0x45 build/printk.o
 
 .debug_aranges  0x00000000      0x140
  .debug_aranges
@@ -324,30 +324,30 @@ OUTPUT(iso/boot/kernel elf32-i386)
  .debug_aranges
                 0x00000120       0x20 build/printk.o
 
-.debug_line     0x00000000     0x1470
- .debug_line    0x00000000       0xc4 build/alarm.o
- .debug_line    0x000000c4       0x9f build/signal.o
- .debug_line    0x00000163      0x2ee build/process.o
- .debug_line    0x00000451      0x187 build/gdt.o
- .debug_line    0x000005d8      0x204 build/console.o
- .debug_line    0x000007dc      0x20e build/traps.o
- .debug_line    0x000009ea      0x17e build/main.o
- .debug_line    0x00000b68      0x6f9 build/keyboard.o
- .debug_line    0x00001261      0x176 build/string.o
- .debug_line    0x000013d7       0x99 build/printk.o
+.debug_line     0x00000000     0x145d
+ .debug_line    0x00000000       0xcd build/alarm.o
+ .debug_line    0x000000cd       0xb5 build/signal.o
+ .debug_line    0x00000182      0x2ee build/process.o
+ .debug_line    0x00000470      0x187 build/gdt.o
+ .debug_line    0x000005f7      0x204 build/console.o
+ .debug_line    0x000007fb      0x1dc build/traps.o
+ .debug_line    0x000009d7      0x17e build/main.o
+ .debug_line    0x00000b55      0x6f9 build/keyboard.o
+ .debug_line    0x0000124e      0x176 build/string.o
+ .debug_line    0x000013c4       0x99 build/printk.o
 
-.debug_str      0x00000000      0x577
- .debug_str     0x00000000      0x577 build/alarm.o
-                                0x25b (size before relaxing)
- .debug_str     0x00000577      0x228 build/signal.o
- .debug_str     0x00000577      0x2e0 build/process.o
- .debug_str     0x00000577      0x289 build/gdt.o
- .debug_str     0x00000577      0x1a4 build/console.o
- .debug_str     0x00000577      0x346 build/traps.o
- .debug_str     0x00000577      0x30a build/main.o
- .debug_str     0x00000577      0x28f build/keyboard.o
- .debug_str     0x00000577      0x1b0 build/string.o
- .debug_str     0x00000577      0x1a7 build/printk.o
+.debug_str      0x00000000      0x57f
+ .debug_str     0x00000000      0x57f build/alarm.o
+                                0x263 (size before relaxing)
+ .debug_str     0x0000057f      0x228 build/signal.o
+ .debug_str     0x0000057f      0x2e0 build/process.o
+ .debug_str     0x0000057f      0x289 build/gdt.o
+ .debug_str     0x0000057f      0x1a4 build/console.o
+ .debug_str     0x0000057f      0x356 build/traps.o
+ .debug_str     0x0000057f      0x312 build/main.o
+ .debug_str     0x0000057f      0x28f build/keyboard.o
+ .debug_str     0x0000057f      0x1b0 build/string.o
+ .debug_str     0x0000057f      0x1a7 build/printk.o
 
 .debug_line_str
                 0x00000000      0x163
@@ -363,7 +363,7 @@ OUTPUT(iso/boot/kernel elf32-i386)
  .debug_line_str
                 0x00000163       0x5a build/console.o
  .debug_line_str
-                0x00000163       0x82 build/traps.o
+                0x00000163       0x8b build/traps.o
  .debug_line_str
                 0x00000163       0x94 build/main.o
  .debug_line_str
@@ -410,7 +410,7 @@ OUTPUT(iso/boot/kernel elf32-i386)
                 0x00000000        0x0 build/printk.o
 
 .debug_rnglists
-                0x00000000       0xc7
+                0x00000000       0xa3
  .debug_rnglists
                 0x00000000       0x1e build/process.o
  .debug_rnglists
@@ -418,6 +418,4 @@ OUTPUT(iso/boot/kernel elf32-i386)
  .debug_rnglists
                 0x0000005f       0x22 build/console.o
  .debug_rnglists
-                0x00000081       0x24 build/traps.o
- .debug_rnglists
-                0x000000a5       0x22 build/keyboard.o
+                0x00000081       0x22 build/keyboard.o

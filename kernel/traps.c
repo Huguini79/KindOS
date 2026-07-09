@@ -3,6 +3,7 @@
 #include "ioport.h"
 #include "keyboard.h"
 #include "pcb.h"
+#include "signal.h"
 #include "callouts.h"
 
 struct Idt
@@ -98,13 +99,8 @@ void clock_handler() {
 		{
 			if (callouts[i].ticks <= ticks)
 			{
-				printk("Alarm for the process with pid=");
-				char buf[16];
-				itoa(callouts[i].pid, buf, 10);
-				printk(buf);
-				printk("\n");
 				callouts[i].ticks = 0;
-				i = 0;
+				sendsig(callouts[i].process, SIGALRM);
 
 			}
 		}

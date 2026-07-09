@@ -38,7 +38,7 @@ void keyboard_handler()
         else
         {
             printk("^C");
-            sendsig(current, SIGTERM);
+            sendsig(current, SIGINT);
         }
     }
     if (scancode == 0x20) {printk("d"); addCharacter('d');}
@@ -96,7 +96,7 @@ void keyboard_handler()
         ctrl_pressed = false;
     }
 
-    if (scancode == 0x01) {sendsig(current, SIGINT);}
+    if (scancode == 0x01) {sendsig(current, SIGTERM);}
 
     if (scancode == 0x1C)
     {

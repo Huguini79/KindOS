@@ -35,6 +35,7 @@ void alarm(U32 s)
     callouts[current->pid].pid = current->pid;
     callouts[current->pid].ticks = cpu_ticks;
     callouts[current->pid].handler = current->tss.eip;
+    callouts[current->pid].process = current;
     // }
 }
 
