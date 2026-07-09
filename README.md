@@ -1,2 +1,2 @@
 <h1>KindOS - Open Source Operating system made from scratch</h1>
-<img width="724" height="453" alt="image" src="https://github.com/user-attachments/assets/5889becb-9551-4c24-93e6-f4eb019f6ae5" />
+<img width="722" height="456" alt="image" src="https://github.com/user-attachments/assets/983bbf31-31c1-4da8-8f73-5a3f22da012d" />
