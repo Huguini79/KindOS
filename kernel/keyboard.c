@@ -5,13 +5,22 @@
 #include "pcb.h"
 #include "signal.h"
 
+#include <stdbool.h>
+
 char keyboard_buffer[12312];
 int pos = 0;
+
+bool ctrl_pressed = false;
 
 void addCharacter(char c)
 {
 	keyboard_buffer[pos++] = c;
 	keyboard_buffer[pos] = '\0';
+    put_cxy(' ', 75, 0);
+    put_cxy(' ', 76, 0);
+    put_cxy(' ', 77, 0);
+    put_cxy(' ', 78, 0);
+    put_cxy(c, 79, 0);
 }
 
 void keyboard_handler()
@@ -20,7 +29,18 @@ void keyboard_handler()
 
 	if (scancode == 0x1E) {printk("a"); addCharacter('a');}
     if (scancode == 0x30) {printk("b"); addCharacter('b');}
-    if (scancode == 0x2E) {printk("c"); addCharacter('c');}
+    if (scancode == 0x2E) {
+        if (!ctrl_pressed)
+        {
+            printk("c"); addCharacter('c');
+        
+        }
+        else
+        {
+            printk("^C");
+            sendsig(current, SIGTERM);
+        }
+    }
     if (scancode == 0x20) {printk("d"); addCharacter('d');}
     if (scancode == 0x12) {printk("e"); addCharacter('e');}
     if (scancode == 0x21) {printk("f"); addCharacter('f');}
@@ -45,7 +65,14 @@ void keyboard_handler()
     if (scancode == 0x15) {printk("y"); addCharacter('y');}
     if (scancode == 0x2C) {printk("z"); addCharacter('z');}
 
-    if (scancode == 0x39) {printk(" "); addCharacter(' ');}
+    if (scancode == 0x39) {
+        printk(" "); addCharacter(' ');
+        put_cxy('S', 75, 0);
+        put_cxy('P', 76, 0);
+        put_cxy('A', 77, 0);
+        put_cxy('C', 78, 0);
+        put_cxy('E', 79, 0);
+    }
 
     if (scancode == 0x1A) {printk("["); addCharacter('[');}
     if (scancode == 0x1B) {printk("]"); addCharacter(']');}
@@ -59,10 +86,25 @@ void keyboard_handler()
     if (scancode == 0x27) {printk(";"); addCharacter(';');}
     if (scancode == 0x0F) {printk("     "); addCharacter(' ');}
 
-    if (scancode == 0x01) {sendsig(current, SIGTERM);}
+    if (scancode == 0x1D)
+    {
+        ctrl_pressed = true;
+    }
+
+    if (scancode == 0x9D)
+    {
+        ctrl_pressed = false;
+    }
+
+    // if (scancode == 0x01) {sendsig(current, SIGTERM);}
 
     if (scancode == 0x1C)
     {
+        put_cxy('E', 75, 0);
+        put_cxy('N', 76, 0);
+        put_cxy('T', 77, 0);
+        put_cxy('E', 78, 0);
+        put_cxy('R', 79, 0);
         if (strcmp(keyboard_buffer, "clear") == 0)
         {
             clear();
@@ -70,6 +112,21 @@ void keyboard_handler()
         } else if (strcmp(keyboard_buffer, "ps") == 0)
         {
         	ps();
+        }
+
+        else if (strcmp(keyboard_buffer, "exit") == 0)
+        {
+            outw(0xB004, 0x2000); /* Bochs and older versions of QEMU 2.0 */
+            outw(0x604, 0x2000); /* Newer versions of qemu */
+            outw(0x4004, 0x3400); /* VirtualBox */
+            outw(0x600, 0x34); /* Cloud Hypervisor */
+        }
+
+        else if (strcmp(keyboard_buffer, "help") == 0)
+        {
+            printk("\n");
+            printk("clear  ps  help  exit");
+            printk("\n");
         }
 
         else if (strcmp(keyboard_buffer, "") == 0)

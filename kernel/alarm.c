@@ -37,3 +37,14 @@ void alarm(U32 s)
     callouts[current->pid].handler = current->tss.eip;
     // }
 }
+
+// void alarm(U32 s)
+// {
+//     __asm__ volatile (
+//         "mov $27, %%eax\n\t"
+//         "mov %0, %%ebx\n\t"
+//         "int $0x80\n\t"
+//         :
+//         : "r"(s)
+//     );
+// }

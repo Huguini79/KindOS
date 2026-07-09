@@ -115,7 +115,13 @@ void keyboard_handler_ext() {
 	keyboard_handler();
 	outb(0x20, 0x20);
 }
-void syscall_handler() {printk("SYSCALL CALLED\n");}
+void syscall_handler() {
+	// if (current->tss.eax == 27)
+	// {
+	// 	alarm_ext(current->tss.ebx);
+	// }
+	printk("SYSCALL CALLED\n");
+}
 
 void TrapsInstall()
 {
