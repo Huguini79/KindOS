@@ -18,5 +18,13 @@ void psig(struct pcb* pcb)
         printk(" *\n");
         pcb->signal &= ~(1U << SIGTERM);
     
+    } else if (pcb->signal & (1U << SIGINT))
+    {
+        printk("\n* SIGINT signal for process with pid=");
+        char buf[16];
+        itoa(pcb->pid, buf, 10);
+        printk(buf);
+        printk(" *\n");
+        pcb->signal &= ~(1U << SIGINT);
     }
 }

@@ -29,7 +29,7 @@ struct Gdt gdt_table[8192] __attribute__((aligned(8))); /* GDT Table Aligned 8 b
 
 void setTSSDescriptor(struct pcb* pcb)
 {
-	setGdtDescriptor(pcb->pid+4, sizeof(pcb->tss) - 1, (U32)&pcb->tss, 0x89, 0x0);
+	setGdtDescriptor(pcb->pid+6, sizeof(pcb->tss) - 1, (U32)&pcb->tss, 0x89, 0x0);
 }
 
 void setGdtDescriptor(
@@ -54,13 +54,17 @@ void GdtInstall()
 	/*
 		* Initialize Descriptors
 		* First the null segment descriptor
-		* Then the code segment descriptor
-		* Then the data segment descriptor
-		* And finally the tss segment descriptor
+		* Then the kernel code segment descriptor
+		* Then the kernel data segment descriptor
+		* Then the user code segment descriptor
+		* Then the user data segment descriptor
+		* And finally the kernel tss segment descriptor
 	*/
 	setGdtDescriptor(0, 0, 0, 0, 0); /* NULL */
-	setGdtDescriptor(1, 0xFFFF, 0, 0x9B, 0xCF); /* CODE */
-	setGdtDescriptor(2, 0xFFFF, 0, 0x93, 0xCF); /* DATA */
+	setGdtDescriptor(1, 0xFFFF, 0, 0x9B, 0xCF); /* KERNEL CODE */
+	setGdtDescriptor(2, 0xFFFF, 0, 0x93, 0xCF); /* KERNEL DATA */
+	setGdtDescriptor(3, 0xFFFF, 0, 0xFB, 0xCF); /* USER CODE */
+	setGdtDescriptor(4, 0xFFFF, 0, 0xF3, 0xCF); /* USER DATA */
 
 	struct tss tss;
 	tss.esp0 = 0x600000;

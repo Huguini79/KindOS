@@ -140,7 +140,7 @@ int exec(struct pcb* pcb)
 {
 	if (pcb->tss.eip != 0)
 	{
-		U16 selector = (pcb->pid + 4) * 8;
+		U16 selector = (pcb->pid + 6) * 8;
 
 		volatile struct
 		{

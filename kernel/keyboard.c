@@ -96,7 +96,7 @@ void keyboard_handler()
         ctrl_pressed = false;
     }
 
-    // if (scancode == 0x01) {sendsig(current, SIGTERM);}
+    if (scancode == 0x01) {sendsig(current, SIGINT);}
 
     if (scancode == 0x1C)
     {
