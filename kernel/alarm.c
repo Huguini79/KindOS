@@ -26,8 +26,8 @@ void alarm(U32 s)
         * So we use a basic formula for calculating the cpu ticks from the milliseconds: ms/10
         * Ms divided by each 10 milliseconds the clock generates a tick, tells us the cpu ticks
     */
-   U32 ms = s * 1000;
-    current->state = Zombie;
+    U32 ms = s * 1000;
+    markAsZombie(current);
     U32 cpu_ticks = ms / 10;
     // int n = searchForFree();
     // if (n != 1)

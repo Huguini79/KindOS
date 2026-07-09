@@ -3,10 +3,12 @@
 #include "pcb.h"
 #include "printk.h"
 #include "string.h"
+#include "signal.h"
 
 struct pcb* current = &processes[0];
 struct pcb* next = &processes[0];
 struct pcb processes[64] = {0};
+struct pcb zombie_processes[64] = {0};
 
 void deleteProcess(struct pcb* pcb)
 {
@@ -48,6 +50,7 @@ struct pcb* createProcess(pid_t pid, U32 eip)
 {
 		struct pcb* newProcess = &processes[pid];
 		newProcess->name = "new process";
+		newProcess->counter = 64 - pid;
 		newProcess->pid = pid;
 		newProcess->alarm = 0;
 		newProcess->signal = 0;
@@ -84,11 +87,17 @@ struct pcb* createProcess(pid_t pid, U32 eip)
 		return newProcess;
 }
 
+void markAsZombie(struct pcb* pcb)
+{
+	pcb->state = Zombie;
+	memset(&zombie_processes[current->pid], pcb, sizeof(struct pcb));
+}
+
 void yield()
 {
 	if (searchProcesses() > 1)
 	{
-		if (processes[current->pid+1].tss.eip != 0)
+		if (processes[current->pid+1].tss.eip != 0 && processes[current->pid+1].state != Zombie)
 		{
 			next = &processes[current->pid+1];
 
@@ -100,6 +109,11 @@ void yield()
 		current->state = Ready;
 		current = next;
 		current->state = Running;
+
+		if (current->signal != 0)
+		{
+			psig(current);
+		}
 
 		put_cxy('C', 60, 0);
 		put_cxy('U', 61, 0);
@@ -153,7 +167,7 @@ void ps()
 	printk("\nPID          CMD          STATE\n");
 	for (int i = 0; i < 64; ++i)
 	{
-		if (processes[i].state == Running || processes[i].state == Ready || processes[i].tss.eip != 0 && processes[i].state != Zombie)
+		if (processes[i].state == Running || processes[i].state == Ready || processes[i].state == Zombie && processes[i].tss.eip != 0)
 		{
 			itoa(processes[i].pid, buf, 10);
 			printk(buf);
@@ -164,9 +178,13 @@ void ps()
 			{
 				printk("Running");
 				
-			} else
+			} else if (processes[i].state == Ready)
 			{
 				printk("Ready");
+
+			} else
+			{
+				printk("Zombie");
 			}
 			printk("\n");
 		}

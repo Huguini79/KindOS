@@ -69,12 +69,14 @@ struct pcb
 } __attribute__((packed));
 
 extern struct pcb processes[MAX_PROCESSES];
+extern struct pcb zombie_processes[MAX_PROCESSES];
 extern struct pcb* current;
 extern struct pcb* next;
 
 struct pcb* createProcess(pid_t pid, U32 eip);
 void yield();
 int exec(struct pcb* pcb);
+void markAsZombie(struct pcb* pcb);
 void ps();
 
 #endif

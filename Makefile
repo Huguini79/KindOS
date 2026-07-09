@@ -1,4 +1,4 @@
-OBJECT_FILES = build/entry.asm.o build/ioport.asm.o build/alarm.o build/process.o build/gdt.o build/console.o build/traps.o build/main.o build/keyboard.o build/string.o build/printk.o
+OBJECT_FILES = build/entry.asm.o build/ioport.asm.o build/alarm.o build/signal.o build/process.o build/gdt.o build/console.o build/traps.o build/main.o build/keyboard.o build/string.o build/printk.o
 
 CC_FLAGS = -I./ -m32 -c -g -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Wno-pointer-to-int-cast -Wno-unused-label -Wno-cpp -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -Os -Iinc
 AS_FLAGS = -f elf32
@@ -24,6 +24,7 @@ all:
 	$(CC) kernel/process.c -o build/process.o
 	$(CC) kernel/keyboard.c -o build/keyboard.o
 	$(CC) kernel/alarm.c -o build/alarm.o
+	$(CC) kernel/signal.c -o build/signal.o
 	$(CC) kernel/libc/string.c -o build/string.o
 	$(CC) kernel/printk.c -o build/printk.o
 	$(LD)

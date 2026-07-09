@@ -35,6 +35,19 @@ int strcmp(const char* str1, const char* str2)
 	return 0;
 }
 
+void* memset(void* s, int c, unsigned int len)
+{
+    unsigned char* p = s;
+
+    while (len--)
+    {
+        *p++ = (unsigned char)c;
+    }
+
+    return s;
+}
+
+/* COPIED FROM OSDEV */
 char * itoa( int value, char * str, int base )
 {
     char * rc;

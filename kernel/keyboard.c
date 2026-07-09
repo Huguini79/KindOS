@@ -2,6 +2,8 @@
 #include "string.h"
 #include "console.h"
 #include "ioport.h"
+#include "pcb.h"
+#include "signal.h"
 
 char keyboard_buffer[12312];
 int pos = 0;
@@ -56,6 +58,8 @@ void keyboard_handler()
     if (scancode == 0x35) {printk("/"); addCharacter('/');}
     if (scancode == 0x27) {printk(";"); addCharacter(';');}
     if (scancode == 0x0F) {printk("     "); addCharacter(' ');}
+
+    if (scancode == 0x01) {sendsig(current, SIGTERM);}
 
     if (scancode == 0x1C)
     {

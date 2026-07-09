@@ -45,14 +45,14 @@ void proc3()
 
 void proc2()
 {
-	alarm(3);
 	printk("\nPROC2\n");
+	alarm(2);
 	while (1) {__asm__ volatile ("sti");}
 }
 
 void proc1()
 {
-	alarm(6);
+	alarm(4);
 	printk("\nPROC1\n");
 	while (1) {__asm__ volatile ("sti");}
 }
@@ -75,9 +75,6 @@ void kernel_main()
 	process1 = createProcess(1, proc1);
 	process2 = createProcess(2, proc2);
 	struct pcb* process3 = createProcess(3, proc3);
-//	int n = exec(process1);
-
-	// yield();
 
 	while (1)
 	{

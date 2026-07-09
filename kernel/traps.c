@@ -104,6 +104,7 @@ void clock_handler() {
 				printk(buf);
 				printk("\n");
 				callouts[i].ticks = 0;
+				i = 0;
 
 			}
 		}
