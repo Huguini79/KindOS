@@ -6,6 +6,7 @@
 #include "traps.h"
 #include "alarm.h"
 #include "ioport.h"
+#include "callouts.h"
 
 void remapPIC()
 {
@@ -61,6 +62,12 @@ void kernel_main()
 	remapPIC();
 	GdtInstall();
 	TrapsInstall();
+	for (int i = 0; i < 64; ++i)
+	{
+		callouts[i].pid = -1;
+		callouts[i].ticks = 0;
+		callouts[i].handler = 0;
+	}
 	ConsoleInstall();
 	printk("Hello World!\n");
 	printk("In KindOS, we are very kind with everyone :)\n\n# ");

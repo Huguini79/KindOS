@@ -98,7 +98,7 @@ void clock_handler() {
 		{
 			if (callouts[i].ticks <= ticks)
 			{
-				printk("Alarma para el proceso con pid=");
+				printk("Alarm for the process with pid=");
 				char buf[16];
 				itoa(callouts[i].pid, buf, 10);
 				printk(buf);

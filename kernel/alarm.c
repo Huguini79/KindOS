@@ -29,11 +29,11 @@ void alarm(U32 s)
    U32 ms = s * 1000;
     current->state = Zombie;
     U32 cpu_ticks = ms / 10;
-    int n = searchForFree();
-    if (n != 1)
-    {
-        callouts[n].pid = current->pid;
-        callouts[n].ticks = cpu_ticks;
-        callouts[n].handler = current->tss.eip;
-    }
+    // int n = searchForFree();
+    // if (n != 1)
+    // {
+    callouts[current->pid].pid = current->pid;
+    callouts[current->pid].ticks = cpu_ticks;
+    callouts[current->pid].handler = current->tss.eip;
+    // }
 }
